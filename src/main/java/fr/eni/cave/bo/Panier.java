@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -44,4 +45,11 @@ public class Panier {
 	@JoinColumn(name = "SHOPPING_CART_ID")
 	@Builder.Default
 	private List<LignePanier> lignes = new ArrayList();
+	
+	// Association avec Client
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@JoinColumn(name = "CLIENT_ID")
+	private Client client;
+
 }
