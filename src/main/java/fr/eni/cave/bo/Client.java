@@ -1,8 +1,11 @@
 package fr.eni.cave.bo;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +20,7 @@ import lombok.ToString;
 @ToString(of = {"pseudo", "nom", "prenom"})
 @EqualsAndHashCode(of = "pseudo")
 @Entity
-@Table(name = "CAVE_CLIENT")
+@Table(name = "CAV_CLIENT")
 @Builder
 public class Client {
 	@Id
@@ -33,4 +36,6 @@ public class Client {
 	@Column(name = "FIRST_NAME", nullable = false, length = 150)
 	private String prenom;
 	
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private Adresse adresse;
 }
