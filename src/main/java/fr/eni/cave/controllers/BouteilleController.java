@@ -90,14 +90,10 @@ public class BouteilleController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody Bouteille bouteille) {
-        Bouteille bouteilleToUpdate = bouteille;
-        if (id > 0) {
-            bouteilleToUpdate = bouteilleService.chargerBouteilleParId(id);
-        }
-
         try {
-            bouteilleService.save(bouteilleToUpdate);
-            return ResponseEntity.ok().body(bouteilleToUpdate);
+            bouteille.setId(id);
+            bouteilleService.save(bouteille);
+            return ResponseEntity.ok().body(bouteille);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
         }
