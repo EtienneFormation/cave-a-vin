@@ -77,4 +77,41 @@ public class BouteilleController {
 
         return ResponseEntity.ok(bouteilles);
     }
+
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody Bouteille bouteille) {
+        try {
+            bouteilleService.save(bouteille);
+            return ResponseEntity.status(HttpStatus.CREATED).body(bouteille);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody Bouteille bouteille) {
+        Bouteille bouteilleToUpdate = bouteille;
+        if (id > 0) {
+            bouteilleToUpdate = bouteilleService.chargerBouteilleParId(id);
+        }
+
+        try {
+            bouteilleService.save(bouteilleToUpdate);
+            return ResponseEntity.ok().body(bouteilleToUpdate);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") String id) {
+        try {
+            Bouteille bouteilleSupprimee = bouteilleService.delete(Integer.parseInt(id));
+            return ResponseEntity.ok().body(bouteilleSupprimee);
+        } catch (NumberFormatException nfe) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Veuillez saisir un identifiant valide (pauvre nouille)");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+        }
+    }
 }

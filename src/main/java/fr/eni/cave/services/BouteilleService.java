@@ -12,4 +12,7 @@ public interface BouteilleService {
 	List<Bouteille> chargerBouteillesParRegion(int idRegion);
 
 	List<Bouteille> chargerBouteillesParCouleur(int idCouleur);
+
+	void save(Bouteille bouteille);
+	Bouteille delete(int idBouteille);
 }

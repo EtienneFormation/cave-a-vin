@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Service
 public class BouteilleServiceImpl implements BouteilleService {
+	private final BouteilleRepository bouteilleRepository;
 	private BouteilleRepository bRepository;
 	private RegionRepository rRepository;
 	private CouleurRepository cRepository;
@@ -88,5 +89,17 @@ public class BouteilleServiceImpl implements BouteilleService {
 		}
 		// Identifiant correspond à aucun enregistrement en base
 		throw new RuntimeException("Aucune couleur de vin ne correspond");
+	}
+
+	public void save(Bouteille bouteille) {
+		bouteilleRepository.save(bouteille);
+	}
+
+	public Bouteille delete(int id) {
+		Bouteille bouteille = bouteilleRepository.findById(id).orElse(null);
+        if (bouteille == null) return null;
+
+        bouteilleRepository.delete(bouteille);
+		return bouteille;
 	}
 }
