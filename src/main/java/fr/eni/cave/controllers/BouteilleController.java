@@ -2,6 +2,7 @@ package fr.eni.cave.controllers;
 
 import fr.eni.cave.bo.Bouteille;
 import fr.eni.cave.services.BouteilleService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -79,7 +80,7 @@ public class BouteilleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Bouteille bouteille) {
+    public ResponseEntity<?> create(@Valid @RequestBody Bouteille bouteille) {
         try {
             bouteilleService.save(bouteille);
             return ResponseEntity.status(HttpStatus.CREATED).body(bouteille);
@@ -89,7 +90,7 @@ public class BouteilleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody Bouteille bouteille) {
+    public ResponseEntity<?> update(@PathVariable("id") int id, @Valid @RequestBody Bouteille bouteille) {
         try {
             bouteille.setId(id);
             bouteilleService.save(bouteille);
