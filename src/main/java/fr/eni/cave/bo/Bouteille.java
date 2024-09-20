@@ -49,7 +49,7 @@ public class Bouteille {
 	private float prix;
 	
 	@ManyToOne
-	@JoinColumn(name = "COULEUR_ID")
+	@JoinColumn(name = "COLOR_ID")
 	@NotNull(message = "{bouteille.couleur.notnull}")
 	@EqualsAndHashCode.Exclude
 	private Couleur couleur;
